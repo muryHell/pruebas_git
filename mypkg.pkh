@@ -1,0 +1,11 @@
+create or replace package mypkg 
+as 
+   cursor c is select 
+           cast( owner  as varchar2(30) ) as x1, 
+           cast( object_name as varchar2(60) ) x2, 
+           cast( created as date ) as x3 
+   from all_objects 
+   where rownum <=3 ; 
+   type cur_tab is table of c%rowtype; 
+   function foo return mypkg.cur_tab pipelined; 
+end; 
